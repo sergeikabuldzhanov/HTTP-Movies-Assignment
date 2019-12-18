@@ -23,20 +23,23 @@ export default function UpdateMovie(props) {
   function handleChange(event) {
     setForm({
       ...form,
-      [event.target.name]: event.target.value
+      [event.target.name]:
+        event.target.name === "stars"
+          ? event.target.value.split(",")
+          : event.target.value
     });
   }
   function handleSubmit(event) {
     event.preventDefault();
     axios
-    .put(`http://localhost:5000/api/movies/${props.movieId}`, form)
+    .put(`http://localhost:5000/api/movies/${form.id}`, form)
     .then(response => {
         debugger;
         })
         .catch(error=>{
             console.error(error);
         });
-        props.history.push(`/movies`);
+        props.history.push(`/`);
   }
   return (
     <form onSubmit={handleSubmit} className="update-form">
